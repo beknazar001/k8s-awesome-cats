@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      component: backend
+  template:
+    metadata:
+      labels:
+        component: backend
+    spec:
+      containers:
+        - name: backend
+          image: 'BACKEND_IMAGE'
+          ports:
+            - containerPort: 3000
+          env:
+          - name: PGHOST
+            valueFrom:
+              secretKeyRef:
+                name: external-postgres-secret
+                key: PGHOST
+          - name: PGUSER
+            valueFrom:
+              secretKeyRef:
+                name: external-postgres-secret
+                key: PGUSER
+          - name: PGDATABASE
+            valueFrom:
+              secretKeyRef:
+                name: external-postgres-secret
+                key: PGDATABASE                
+          - name: PGPASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: external-postgres-secret
+                key: PGPASSWORD
