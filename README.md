@@ -21,3 +21,10 @@ In the [backend-deployment.yml](./backend-deployment.yml) file at the line _17_,
 <br>
 
 ### 3. Connect Backend to the Frontend
+
+### Install Nginx Ingress Controller 
+```
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+helm repo update
+helm install nginx-ingress ingress-nginx/ingress-nginx
+```
