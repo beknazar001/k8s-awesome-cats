@@ -6,6 +6,13 @@
 
 ## Instructions
 
+### Pre-requirements: Install Nginx Ingress Controller
+```
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+helm repo update
+helm install nginx-ingress ingress-nginx/ingress-nginx
+```
+
 ### 1. Creating K8s secret
 Database instance should be already running and created with a custom user, password and database.
 
@@ -16,15 +23,36 @@ kubectl apply -f external-postgres-secret.yml
 ```
 <br>
 
-### 2. Deploy the backend application with an ingress. 
-In the [backend-deployment.yml](./backend-deployment.yml) file at the line _17_, change to your backend image. Apply backend* files and the file with ingress configurations.
+### 2. Deploy the backend application 
+In the [backend-deployment.yml](./backend-deployment.yml) file at line _17_, change to your backend image. Apply backend* files.
+```
+kubectl apply -f backend-deployment.yml
+kubectl apply -f backend-cluster-ip-service.yml
+```
 <br>
 
-### 3. Connect Backend to the Frontend
+### 3. Deploy the frontend application
+In the [frontend-deployment.yml](./frontend-deployment.yml) file at line _17_, change to your frontend image. Apply frontend* files to create those resources.
+```
+kubectl apply -f frontend-deployment.yml
+kubectl apply -f frontend-cluster-ip-service.yml
+```
+<br>
 
-### Install Nginx Ingress Controller 
+### 4. Create ingress to expose application publically
 ```
-helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-helm repo update
-helm install nginx-ingress ingress-nginx/ingress-nginx
+kubectl apply -f ingress-service.yml
 ```
+
+### 5. Check all created resources
+```
+kubectl get deployment backend-deployment frontend-deployment
+kubectl get svc backend-cluster-ip-service frontend-cluster-ip-service
+kubectl get ingress ingress-service
+```
+
+You'll be able to open and interact with the application by opening ingress external-ip from the browser <br>
+
+
+
+<h2 style=color:orange>"You are never too old to set another goal or to dream a new dream."</h2><h3> - C.S. Lewis</h3>
