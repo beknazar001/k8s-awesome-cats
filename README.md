@@ -103,5 +103,14 @@ kubectl get ingress ingress-service
 
 You'll be able to open and interact with the application by opening ingress domain address from the browser <br><br><br>
 
+### 6. Check points
+```
+1: open <ingresDomainAddress> from browser. If you are not able to open then there is problem with frontend or with Ingress Controller
+2: open <ingresDomainAddress>/api ; There should be written "app is working" that means your backend is working properly. If not there is issues with setting the backend application.
+3: open <ingresDomainAddress>/api/all ; There should be empty or buch of texts. If you are not able to open, then it means problems with connection to Database. Double check on credentials. If you can open, then your database connection is also set up correctly. Did great so far. Now, you can register, signing and go through the application. 
+```
+
+
+
 
 <h2 style=color:orange>"You are never too old to set another goal or to dream a new dream."</h2><h3> - C.S. Lewis</h3>
